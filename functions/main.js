@@ -42,7 +42,7 @@ exports.handler = async function({queryStringParameters}, context, callback) {
         console.log("Fetching next trips for", stopNo);
         const result = await getNextTripsForStop(stopNo);
         console.log("Got Trips:", result);
-        return callback(null, {statusCode: 200, body: result});
+        return callback(null, {statusCode: 200, body: JSON.stringify(result)});
     } catch (error) {
         console.error("Failed with error", error);
         return callback(error);
