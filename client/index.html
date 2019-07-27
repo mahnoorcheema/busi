@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
+</head>
+<body>
+    <h1>Where's the Bus?!?</h1>
+    <form>
+        <label>Enter a stop number: 
+            <input type="text" id="search" list="searchResults" placeholder="7613">
+        </label>
+        <button type="submit" id="submit">Submit</button>
+    </form>
+    <ul id="buses">
+        <div id="bus">
+            <li>
+                <button>Stop # / Intersection</button>
+            </li>
+        </div>
+    </ul>
+    <script>
+        async function getData() {
+            return {
+    "GetRouteSummaryForStopResult": {
+    "StopNo": "7613",
+    "StopDescription": "KING EDWARD / OSGOODE",
+    "Error": "",
+    "Routes": {
+      "Route": {
+        "RouteNo": "16",
+        "DirectionID": 1,
+        "Direction": "Westbound",
+        "RouteHeading": "Britannia"
+      }
+    }
+  }
+}
+        }
+    </script>
+</body>
+</html>
