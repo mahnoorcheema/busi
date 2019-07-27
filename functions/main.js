@@ -2,8 +2,6 @@ require('dotenv').config()
 const fetch = require("node-fetch");
 const URLSearchParams = require('@ungap/url-search-params')
 
-// const stopNumber = document.getElementById('stopNumber').value;
-
 const getSummaryForStop = async (stopNumber) => {
     const params = new URLSearchParams();
     params.append('appID', process.env.OCTRANSPO_APP_ID);
@@ -34,13 +32,19 @@ const getNextTripsForStop = async(stopNumber) => {
     return response.json();
 }
 
-// const submitButton = document.getElementById("submit");
-// submitButton.addEventListener('click', getNextTripsForStop);
-
-function asyncHelper(promise) {
-    promise
-    .then(obj => console.log(JSON.stringify(obj, null, 2)))
-    .catch(console.error);
+exports.handler = async function({queryStringParameters}, context, callback) {
+    const {stopNo} = queryStringParameters;
+    if (!stopNo) {
+        console.error("No stopNo provided");
+        return callback(new Error("No stopNo"));
+    }
+    try {
+        console.log("Fetching next trips for", stopNo);
+        const result = await getNextTripsForStop(stopNo);
+        console.log("Got Trips:", result);
+        return callback(null, {statusCode: 200, body: result});
+    } catch (error) {
+        console.error("Failed with error", error);
+        return callback(error);
+    }
 }
-
-asyncHelper(getNextTripsForStop(3000));
